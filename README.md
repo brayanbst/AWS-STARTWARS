@@ -31,8 +31,8 @@ Se necesita:
 ```
 
 2. Clona el repositorio
-```sh
-
+```
+    https://github.com/brayanbst/AWS-STARTWARS.git
 ```
 
 
