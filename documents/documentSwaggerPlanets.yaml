@@ -1,0 +1,320 @@
+openapi: 3.0.1
+info:
+  title: API de Star Wars.
+  description: Esta API se ancarga de manejar La Informacion de Detallada de Star Wars.
+  version: 1.0.0
+servers:
+- url: https://6rcu7i68kb.execute-api.us-west-2.amazonaws.com/planets
+tags:
+- name: Planetas
+  description: Maneja la Inforacion de Planetas de Star Wars
+
+paths:
+
+  /:
+    post:
+      tags:
+      - Planetas
+      summary: Inserta Informacion de Nuevo Planeta
+      parameters:
+      - $ref: '#/components/parameters/token'
+  
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BodyPlanetaPost'
+        required: true
+      responses:
+        200:
+          description: (OK) La informacion del planeta se guardo correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoPlanetasPost'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+    
+  /Lista:
+    get:
+      tags:
+      - planetas
+      summary: Obtiene la Inforacion de la base de dato de todos los planetas.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: id
+        in: path
+        description: Identificador de los planetas obtenidos
+        required: true
+        schema:
+          type: string
+        
+      responses:
+        200:
+          description: (OK) La Inforacion de los planetas se obtuvieron correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoPlanetasGet'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  
+  /actualiza/{Id}:
+    put:
+      tags:
+      - planetas
+      summary: Actualiza la informacion de un planeta en la base de datos.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: idplaneta
+        in: path
+        description: Identificador del planeta a obtener
+        required: true
+        schema:
+          type: string
+          
+      requestBody:
+        content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BodyPlanetaPut'
+        
+      responses:
+        200:
+          description: (OK) La Inforacion del planeta se actualiza correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoPlanetasPost'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+          
+  /elimina/{Id}:
+    delete:
+      tags:
+        - planetas
+      summary: Elimina logicamente a un planeta.
+      parameters:
+      - $ref: '#/components/parameters/token'
+      - name: idplaneta
+        in: path
+        description: Identificador del planeta a obtener
+        required: true
+        schema:
+          type: string
+      responses:
+        200:
+          description: (OK) El planeta se elimino correctamente
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ExitoPlanetasPost'
+        400:
+          $ref: '#/components/responses/BadRequest'
+        401:
+          $ref: '#/components/responses/Unauthorized' 
+        404:
+          $ref: '#/components/responses/NotFound'
+        500:
+          $ref: '#/components/responses/ServerError'
+  
+components:
+  responses:
+    
+    Unauthorized:
+      description: (Unauthorized) No hay autorizacion para llamar al servicio
+    
+    NotFound:
+      description: (NotFound) No se encontro informacion 
+    
+    BadRequest:
+      description: (Bad Request) Los datos enviados son incorrectos o hay datos obligatorios no enviados
+      
+    ServerError:
+      description: Error en servidor
+        
+
+  parameters:
+    token:
+      in: header
+      name: token
+      description: Token de autenticacion en API.
+      required: true
+      schema:
+        type: string
+    
+
+  schemas:
+
+    BodyPlanetaPost:
+      type: object
+      properties:
+        nombre:
+          type: string
+          description: Nombre del Nuevo planeta a crear
+        periodoRotacion:
+          type: string
+          description: Periodo de rotacionb del nuevo planeta 
+        periodoOrbital:
+          type: string
+          description: Periodo orbital del nuevo planeta
+        diametro:
+          type: string
+          description: Diametro del nuevo planeta
+        clima:
+          type: string
+          description: Climas Habituales en el nuevo planeta
+        gravedad:
+          type: string
+          description: Gravedad en la que se encuentra el nuevo planeta
+        terreno:
+          type: string
+          description: Terreno que se encuentra el nuevo planeta
+        aguaSuperficial:
+          type: string
+          description: Cantidad de Agua superficial del nuevo planeta
+        poblacion:
+          type: string
+          description: Numero de poblacion del nuevo planeta        
+        residentes:
+          type: string
+          description: Apis de residentes que habitaran el nuevo planeta  
+        peliculas:
+          type: string
+          description: Apis de todas las peliculas que en la que va aparecer el nuevo planeta
+        creado:
+          type: string
+          description: Fecha y tiempo en la que fue creado este nuevo planeta 
+        editado:
+          type: string
+          description: Fecha y tiempo en la que fue Editado este nuevo planeta  
+        url:
+          type: string
+          description: Api con la url del detalle de este nuevo planeta
+        
+
+    ExitoPlanetasPost:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id unico encriptado automaticamente al crear un nuevo registro
+          example: 265b5256-925b-49f7-856d-84ec626fa0b5
+        nombre:
+          type: string
+          description: Nombre del Nuevo planeta a crear
+        periodoRotacion:
+          type: string
+          description: Periodo de rotacionb del nuevo planeta 
+        periodoOrbital:
+          type: string
+          description: Periodo orbital del nuevo planeta
+        diametro:
+          type: string
+          description: Diametro del nuevo planeta
+        clima:
+          type: string
+          description: Climas Habituales en el nuevo planeta
+        gravedad:
+          type: string
+          description: Gravedad en la que se encuentra el nuevo planeta
+        terreno:
+          type: string
+          description: Terreno que se encuentra el nuevo planeta
+        aguaSuperficial:
+          type: string
+          description: Cantidad de Agua superficial del nuevo planeta
+        poblacion:
+          type: string
+          description: Numero de poblacion del nuevo planeta        
+        residentes:
+          type: string
+          description: Apis de residentes que habitaran el nuevo planeta  
+        peliculas:
+          type: string
+          description: Apis de todas las peliculas que en la que va aparecer el nuevo planeta
+        creado:
+          type: string
+          description: Fecha y tiempo en la que fue creado este nuevo planeta 
+        editado:
+          type: string
+          description: Fecha y tiempo en la que fue Editado este nuevo planeta  
+        url:
+          type: string
+          description: Api con la url del detalle de este nuevo planeta
+          
+          
+    ExitoPlanetasGet:
+      type: object
+      properties:
+        respuesta:
+          type: integer
+          enum: [1]
+          description: Array Con el listado de plentas
+          
+    BodyPlanetaPut:
+      type: object
+      properties:
+        id:
+          type: string
+          description: id unico encriptado del registro
+        nombre:
+          type: string
+          description: Nombre del Nuevo planeta a crear
+        periodoRotacion:
+          type: string
+          description: Periodo de rotacionb del nuevo planeta 
+        periodoOrbital:
+          type: string
+          description: Periodo orbital del nuevo planeta
+        diametro:
+          type: string
+          description: Diametro del nuevo planeta
+        clima:
+          type: string
+          description: Climas Habituales en el nuevo planeta
+        gravedad:
+          type: string
+          description: Gravedad en la que se encuentra el nuevo planeta
+        terreno:
+          type: string
+          description: Terreno que se encuentra el nuevo planeta
+        aguaSuperficial:
+          type: string
+          description: Cantidad de Agua superficial del nuevo planeta
+        poblacion:
+          type: string
+          description: Numero de poblacion del nuevo planeta        
+        residentes:
+          type: string
+          description: Apis de residentes que habitaran el nuevo planeta  
+        peliculas:
+          type: string
+          description: Apis de todas las peliculas que en la que va aparecer el nuevo planeta
+        creado:
+          type: string
+          description: Fecha y tiempo en la que fue creado este nuevo planeta 
+        editado:
+          type: string
+          description: Fecha y tiempo en la que fue Editado este nuevo planeta  
+        url:
+          type: string
+          description: Api con la url del detalle de este nuevo planeta
