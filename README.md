@@ -45,7 +45,7 @@ Cuenta con una bases de datos, *GeneralTable*, esta contiene la informacion de P
 
 | HTTP Verb | URL                                    				   | Descripcion                            |
 |-----------|----------------------------------------------------------|----------------------------------------|
-| **GET**   | http://127.0.0.1:3009/v1/packages/:packageId             | Obtener un Planeta en especifico                    |
+| **GET**   | https://6rcu7i68kb.execute-api.us-west-2.amazonaws.com/planets/91154f97-08b3-4bf2-a9b9-5d9013e5fea5 | Obtener un Planeta en especifico                    |
 | **GET**   | https://6rcu7i68kb.execute-api.us-west-2.amazonaws.com/planets | Obtener Listado de Planetas  |
 | **POST**  | https://6rcu7i68kb.execute-api.us-west-2.amazonaws.com/planets  | Crear un nuevo planeta          |
 | **PUT**   | https://6rcu7i68kb.execute-api.us-west-2.amazonaws.com/planets/{id}  | Actualiza un planeta en especifico   |
